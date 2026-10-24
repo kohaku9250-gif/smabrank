@@ -1005,6 +1005,35 @@ backToFighters.addEventListener("click", function() {
 });
 </script> 
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const authPage = document.getElementById("authPage");
+  const openAuth = document.getElementById("openAuth");
+  const closeAuth = document.getElementById("closeAuth");
+
+  function showAuthPage() {
+    document.querySelector(".layout").hidden = true;
+    document.querySelector(".alert").hidden = true;
+    document.querySelector(".search").hidden = true;
+    document.querySelector(".nav").hidden = true;
+    authPage.hidden = false;
+    window.scrollTo(0, 0);
+  }
+
+  function showMainPage() {
+    authPage.hidden = true;
+    document.querySelector(".layout").hidden = false;
+    document.querySelector(".alert").hidden = false;
+    document.querySelector(".search").hidden = false;
+    document.querySelector(".nav").hidden = false;
+    window.scrollTo(0, 0);
+  }
+
+  openAuth.addEventListener("click", showAuthPage);
+  closeAuth.addEventListener("click", showMainPage);
+});
+</script>
+  
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
@@ -1058,9 +1087,6 @@ function showMainPage() {
   document.querySelector(".nav").hidden = false;
   window.scrollTo({ top: 0, behavior: "auto" });
 }
-
-openAuth.addEventListener("click", showAuthPage);
-closeAuth.addEventListener("click", showMainPage);
 
 registerButton.addEventListener("click", async () => {
   const name = playerName.value.trim();
