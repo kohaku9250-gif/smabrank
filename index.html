@@ -792,6 +792,38 @@ body.auth-mode #authPage {
     <p id="authMessage" role="status" aria-live="polite"></p>
     <p id="authUser"></p>
 
+<div id="profileEditor" hidden>
+  <hr>
+  <h3>プレイヤープロフィール</h3>
+
+  <label for="profileName">プレイヤー名</label>
+  <input
+    id="profileName"
+    type="text"
+    maxlength="20"
+    placeholder="プレイヤー名を入力"
+  >
+
+  <label for="mainFighter">メインキャラ</label>
+  <input
+    id="mainFighter"
+    type="text"
+    maxlength="30"
+    placeholder="例：マリオ"
+  >
+
+  <label for="profileBio">自己紹介</label>
+  <textarea
+    id="profileBio"
+    maxlength="200"
+    rows="4"
+    placeholder="自己紹介を入力（200文字以内）"
+  ></textarea>
+
+  <button class="btn" id="saveProfile">プロフィールを保存</button>
+  <p id="profileMessage" role="status"></p>
+</div>
+    
     <button class="btn btn-outline" id="closeAuth">サイトに戻る</button>
   </div>
 </section>
