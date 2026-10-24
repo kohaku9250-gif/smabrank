@@ -2,21 +2,19 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#10131c">
-<meta name="description" content="スマブランクはスマブラSPの対戦・ランキングを楽しむプレイヤー向けサービスです。">
-<title>スマブランク | 対戦をもっと楽しもう</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="スマブランクはスマブラSPの対戦とランキングを楽しむコミュニティです。">
+<title>スマブランク｜スマブラSP対戦コミュニティ</title>
 
 <style>
 :root {
+  --blue: #0865e8;
+  --blue-dark: #064eb5;
+  --border: #d2d2d2;
+  --text: #333333;
+  --muted: #777777;
   --bg: #ffffff;
-  --panel: #ffffff;
-  --panel2: #f3f6fa;
-  --text: #222b3a;
-  --muted: #667085;
-  --blue: #2563eb;
-  --border: #e2e8f0;
-  --green: #168653;
 }
 
 * {
@@ -27,319 +25,398 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: system-ui, -apple-system, "Segoe UI",
-    "Noto Sans JP", sans-serif;
-  line-height: 1.7;
+  font-family: Arial, "Noto Sans JP", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 a {
-  color: inherit;
+  color: #064ee8;
   text-decoration: none;
 }
 
-button {
+a:hover {
+  text-decoration: underline;
+}
+
+button, input {
   font: inherit;
-  cursor: pointer;
 }
 
 .container {
-  width: min(1100px, 92%);
-  margin: auto;
+  width: min(970px, 96%);
+  margin: 0 auto;
 }
 
-header {
-  border-bottom: 1px solid var(--border);
-  background: #ffffff;
-}
+/* ヘッダー */
 
-.nav {
-  min-height: 72px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.header {
+  display: grid;
+  grid-template-columns: 230px 1fr;
   gap: 20px;
-  flex-wrap: wrap;
-  padding: 12px 0;
+  padding: 14px 0 10px;
+  align-items: center;
 }
 
 .logo {
-  font-size: 25px;
+  color: #222222;
+  font-size: 29px;
   font-weight: 900;
-  letter-spacing: -1px;
+  letter-spacing: -1.5px;
+  line-height: 1.2;
 }
 
 .logo span {
   color: var(--blue);
 }
 
-nav {
+.logo small {
+  display: block;
+  margin-top: 5px;
+  color: #777777;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 2px;
+}
+
+.header-right {
+  min-width: 0;
+}
+
+.top-links {
   display: flex;
-  gap: 22px;
+  justify-content: flex-end;
   flex-wrap: wrap;
-  color: var(--muted);
-  font-size: 14px;
+  gap: 5px 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eeeeee;
+  font-size: 12px;
 }
 
-nav a:hover {
-  color: white;
+.account-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 10px;
 }
 
-.button {
+.btn {
   display: inline-block;
-  padding: 10px 18px;
-  border-radius: 8px;
-  border: 1px solid #2563eb;
-  background: #2563eb;
+  padding: 8px 14px;
+  background: var(--blue);
+  border: 1px solid var(--blue);
+  border-radius: 4px;
   color: #ffffff;
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: var(--blue-dark);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.btn-outline {
+  background: #ffffff;
+  color: var(--blue);
+}
+
+.btn-outline:hover {
+  background: #edf4ff;
+  color: var(--blue-dark);
+}
+
+/* 検索 */
+
+.search {
+  display: flex;
+  margin: 14px 0 12px;
+}
+
+.search input {
+  width: 100%;
+  min-width: 0;
+  height: 35px;
+  padding: 7px 11px;
+  border: 1px solid #cccccc;
+  border-radius: 4px 0 0 4px;
+  outline-color: var(--blue);
+}
+
+.search button {
+  border-radius: 0 4px 4px 0;
+  white-space: nowrap;
+}
+
+/* メニュー */
+
+.nav {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  margin-bottom: 15px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 2px 3px #00000012;
+}
+
+.nav a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 42px;
+  padding: 8px 3px;
+  border-right: 1px solid #dddddd;
+  background: #ffffff;
+  text-align: center;
+  font-weight: 600;
+}
+
+.nav a:last-child {
+  border-right: none;
+}
+
+.nav a:hover,
+.nav a.active {
+  background: var(--blue);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* お知らせ */
+
+.alert {
+  margin-bottom: 28px;
+  padding: 13px 16px;
+  border: 1px solid #f0c5c9;
+  border-radius: 4px;
+  background: #f8e5e7;
+  color: #333333;
+}
+
+.alert a {
+  font-weight: 700;
+}
+
+/* メインレイアウト */
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 336px;
+  gap: 30px;
+  align-items: start;
+}
+
+.section {
+  margin-bottom: 22px;
+}
+
+.section-title {
+  margin: 0 0 10px;
+  padding: 8px 12px;
+  background: var(--blue);
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.intro-title {
+  margin: 0 0 7px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid var(--blue);
+  color: var(--blue);
+  font-size: 27px;
+  font-weight: 400;
+}
+
+.intro p {
+  margin: 0 0 18px;
+  line-height: 1.65;
+}
+
+/* 大会一覧 */
+
+.event {
+  padding: 12px 11px;
+  border: 1px solid var(--border);
+  border-bottom: none;
+  background: #ffffff;
+}
+
+.event:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.event-title {
+  display: block;
+  margin-bottom: 3px;
+  font-weight: 700;
+}
+
+.event-description {
+  color: #666666;
+  font-size: 12px;
+}
+
+.event-meta {
+  margin-top: 7px;
+  color: #666666;
+  font-size: 12px;
+  text-align: right;
+}
+
+.event-status {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 1px 5px;
+  border: 1px solid #a8d6b5;
+  border-radius: 3px;
+  background: #edf8ef;
+  color: #28763c;
+}
+
+/* ランキング */
+
+.ranking-list {
+  border: 1px solid var(--border);
+}
+
+.player {
+  display: grid;
+  grid-template-columns: 28px 46px minmax(0, 1fr) 48px;
+  gap: 8px;
+  align-items: center;
+  min-height: 70px;
+  padding: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.player:last-child {
+  border-bottom: none;
+}
+
+.rank-number {
+  color: #333333;
+  font-size: 19px;
   font-weight: 700;
   text-align: center;
 }
 
-.button.primary {
-  background: #2563eb;
-  color: #ffffff;
-  border-color: #2563eb;
-}
-
-.button:hover {
-  background: #1d4ed8;
-  border-color: #1d4ed8;
-  color: #ffffff;
-}
-  
-.hero {
-  padding: 68px 0 52px;
-  background: #ffffff;
-}
-  
-.tag {
-  display: inline-block;
-  padding: 5px 12px;
-  border: 1px solid #405578;
-  border-radius: 30px;
-  color: #a9cbff;
-  font-size: 13px;
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 6px;
+  background: #edf2fa;
+  color: var(--blue);
+  font-size: 22px;
   font-weight: 700;
 }
 
-h1 {
-  margin: 20px 0 12px;
-  font-size: clamp(32px, 6vw, 52px);
-  line-height: 1.25;
-  letter-spacing: -1.5px;
+.player-info {
+  min-width: 0;
 }
 
-.hero p {
-  color: var(--muted);
-  max-width: 580px;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-top: 26px;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin-top: 34px;
-}
-
-.stat {
-  padding: 17px;
-  background: #191e2bd9;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-}
-
-.stat strong {
+.player-name {
   display: block;
-  font-size: 23px;
+  overflow-wrap: anywhere;
+  font-weight: 700;
 }
 
-.stat span {
-  color: var(--muted);
-  font-size: 13px;
-}
-
-main {
-  padding: 32px 0 60px;
-}
-
-.section {
-  margin-bottom: 30px;
-}
-
-.section-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 15px;
-}
-
-h2 {
-  margin: 0;
-  font-size: 21px;
-}
-
-.more {
-  color: var(--blue);
-  font-size: 13px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 20px;
-}
-
-.card {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 13px;
-  overflow: hidden;
-}
-
-.card-body {
-  padding: 20px;
-}
-
-.notice {
-  padding: 13px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.notice:last-child {
-  border-bottom: none;
-}
-
-.date {
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.notice-title {
-  display: block;
-  margin-top: 3px;
-  font-weight: 650;
-}
-
-.empty {
-  color: var(--muted);
-  font-size: 14px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-}
-
-th, td {
-  padding: 13px 12px;
-  border-bottom: 1px solid var(--border);
-  white-space: nowrap;
-}
-
-th {
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 600;
-}
-
-td {
-  font-size: 14px;
-}
-
-tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.rank {
-  color: #ffd16d;
-  font-weight: 900;
-}
-
-.rating {
-  color: var(--green);
-  font-weight: 800;
-}
-
-.table-wrap {
-  overflow-x: auto;
-}
-
-.badge {
-  display: inline-block;
-  padding: 3px 8px;
-  background: #263b59;
-  color: #b6d3ff;
-  border-radius: 5px;
+.player-label {
+  margin-top: 4px;
+  color: #888888;
   font-size: 11px;
 }
 
-.cta {
-  padding: 26px;
-  background: #f3f6fb;
-  border: 1px solid var(--border);
-  border-radius: 13px;
-}
-  
-.cta {
-  padding: 26px;
-  background: #2563eb;
-  border: 1px solid #2563eb;
-  border-radius: 13px;
-  color: #ffffff;
+.rating {
+  color: #666666;
+  font-size: 14px;
+  text-align: right;
 }
 
-footer {
-  border-top: 1px solid var(--border);
-  padding: 25px 0;
+/* 共通カード */
+
+.box {
+  padding: 14px;
+  border: 1px solid var(--border);
+  background: #ffffff;
+}
+
+.muted {
   color: var(--muted);
   font-size: 12px;
 }
 
-.footer-inner {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
+.center {
+  text-align: center;
 }
 
+.full-button {
+  display: block;
+  margin-top: 12px;
+}
+
+/* フッター */
+
+footer {
+  margin-top: 28px;
+  padding: 22px 0;
+  border-top: 1px solid #dddddd;
+  color: #777777;
+  font-size: 12px;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-bottom: 12px;
+}
+
+/* スマートフォン対応 */
+
 @media (max-width: 700px) {
-  .nav {
-    align-items: flex-start;
-  }
-
-  nav {
-    order: 3;
-    width: 100%;
-    gap: 15px;
-  }
-
-  .grid {
+  .header {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 
-  .stats {
-    gap: 8px;
+  .logo {
+    font-size: 27px;
   }
 
-  .stat {
-    padding: 12px;
+  .top-links {
+    justify-content: flex-start;
   }
 
-  .stat strong {
-    font-size: 18px;
+  .account-buttons {
+    justify-content: flex-start;
   }
 
-  h1 {
-    font-size: 34px;
+  .nav {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .nav a:nth-child(3) {
+    border-right: none;
+  }
+
+  .nav a:nth-child(-n+3) {
+    border-bottom: 1px solid #dddddd;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .player {
+    grid-template-columns: 28px 46px minmax(0, 1fr) 48px;
   }
 }
 </style>
@@ -347,187 +424,319 @@ footer {
 
 <body>
 
-<header>
-  <div class="container nav">
-    <a class="logo" href="#" aria-label="スマブランク ホーム">
+<div class="container">
+
+  <header class="header">
+    <a class="logo" href="#home">
       スマ<span>ブランク</span>
+      <small>SMASH BRANK COMMUNITY</small>
     </a>
 
-    <nav aria-label="メインメニュー">
-      <a href="#ranking">ランキング</a>
-      <a href="#matches">対戦募集</a>
-      <a href="#tournaments">大会</a>
-      <a href="#about">サイトについて</a>
-    </nav>
+    <div class="header-right">
+      <div class="top-links">
+        <a href="#about">サイトについて</a>
+        <a href="#rules">対戦ルール</a>
+        <a href="#faq">Q &amp; A</a>
+        <a href="#contact">お問い合わせ</a>
+        <a href="#links">リンク集</a>
+      </div>
 
-    <a class="button" href="#about">参加する</a>
+      <div class="account-buttons">
+        <a class="btn" href="#account">新規登録・ログイン</a>
+      </div>
+    </div>
+  </header>
+
+  <form class="search" id="searchForm">
+    <input
+      id="searchInput"
+      type="search"
+      placeholder="サイト内検索"
+      aria-label="サイト内検索">
+    <button class="btn" type="submit">検索</button>
+  </form>
+
+  <nav class="nav" aria-label="メインメニュー">
+    <a href="#matches">フリー対戦</a>
+    <a href="#rating">レーティング対戦</a>
+    <a href="#tournaments">大会</a>
+    <a href="#players">プレイヤー一覧</a>
+    <a href="#diary">プレイヤー日記</a>
+    <a href="#ranking">ランキング</a>
+  </nav>
+
+  <div class="alert">
+    <a href="#news">【お知らせ】スマブランク開発情報</a>
+    <div class="muted">
+      現在、各種機能を順次開発しています。
+    </div>
   </div>
-</header>
 
-<section class="hero">
-  <div class="container">
-    <span class="tag">SMASH BRANK COMMUNITY</span>
+  <div class="layout">
 
-    <h1>
-      対戦を、もっと。<br>
-      強さを、ランキングに。
-    </h1>
+    <main>
 
-    <p>
-      スマブラSPを楽しむプレイヤーのためのコミュニティ。
-      対戦相手を見つけて、実力を磨き、ランキングの上位を目指そう。
-    </p>
+      <section class="section intro" id="home">
+        <h1 class="intro-title">スマブランク</h1>
 
-    <div class="hero-actions">
-      <a class="button primary" href="#ranking">
-        ランキングを見る →
-      </a>
-      <a class="button" href="#matches">
-        対戦募集を見る
-      </a>
-    </div>
+        <p>
+          スマブランクは、大乱闘スマッシュブラザーズ SPECIALを
+          楽しむプレイヤーのための対戦コミュニティです。
+          対戦相手を探したり、レーティングランキングを確認したり、
+          大会に参加したりできるサービスを目指しています。
+        </p>
 
-  </div>
-</section>
+        <p>
+          ユーザー登録、対戦結果の記録、ランキングなどの機能を
+          順番に追加していきます。
+        </p>
+      </section>
 
-<main class="container">
+      <section class="section" id="tournaments">
+        <h2 class="section-title">開催予定の大会一覧</h2>
 
-  <section class="section">
-    <div class="section-heading">
-      <h2>📢 お知らせ</h2>
-    </div>
+        <article class="event">
+          <a class="event-title" href="#tournament-info">
+            スマブランク オンライン大会
+          </a>
+          <div class="event-description">
+            オンラインでプレイヤー同士が競い合う大会を予定しています。
+          </div>
+          <div class="event-meta">
+            <span class="event-status">準備中</span>
+            開催日時：未定
+          </div>
+        </article>
 
-    <div class="card card-body">
-      <div class="notice">
-        <span class="date">INFO</span>
-        <span class="notice-title">
-          スマブランク開発プロジェクト始動！
-        </span>
-      </div>
-      <div class="notice">
-        <span class="date">COMING SOON</span>
-        <span class="notice-title">
-          対戦募集・ユーザー登録機能を準備中
-        </span>
-      </div>
-    </div>
-  </section>
+        <article class="event">
+          <a class="event-title" href="#tournament-info">
+            レーティングチャレンジ
+          </a>
+          <div class="event-description">
+            レーティングを競い、実力を試せるイベントを企画中です。
+          </div>
+          <div class="event-meta">
+            <span class="event-status">準備中</span>
+            開催日時：未定
+          </div>
+        </article>
 
-  <div class="grid">
+        <article class="event">
+          <a class="event-title" href="#tournament-info">
+            フリー対戦交流会
+          </a>
+          <div class="event-description">
+            気軽に対戦相手を探して交流できるイベントを目指しています。
+          </div>
+          <div class="event-meta">
+            <span class="event-status">準備中</span>
+            開催日時：未定
+          </div>
+        </article>
+      </section>
 
-    <section class="section" id="ranking">
-      <div class="section-heading">
-        <h2>🏆 レーティングランキング</h2>
-        <span class="badge">サンプル</span>
-      </div>
-
-      <div class="card">
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>順位</th>
-                <th>プレイヤー</th>
-                <th>レート</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="rank">1</td>
-                <td>プレイヤーA</td>
-                <td class="rating">1850</td>
-              </tr>
-              <tr>
-                <td class="rank">2</td>
-                <td>プレイヤーB</td>
-                <td class="rating">1780</td>
-              </tr>
-              <tr>
-                <td class="rank">3</td>
-                <td>プレイヤーC</td>
-                <td class="rating">1720</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>プレイヤーD</td>
-                <td>1650</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>プレイヤーE</td>
-                <td>1600</td>
-              </tr>
-            </tbody>
-          </table>
+      <section class="section" id="matches">
+        <h2 class="section-title">フリー対戦・対戦募集</h2>
+        <div class="box">
+          <p>
+            対戦相手を募集できる機能を開発予定です。
+          </p>
+          <p class="muted">
+            ※現在はまだ募集や参加の登録はできません。
+          </p>
+          <a class="btn full-button" href="#news">
+            開発情報を見る
+          </a>
         </div>
+      </section>
 
-        <div class="card-body">
-          <p class="empty">
-            ※現在は表示見本です。実際のユーザーや戦績ではありません。
+      <section class="section" id="rating">
+        <h2 class="section-title">レーティング対戦</h2>
+        <div class="box">
+          <p>
+            対戦結果に応じてレートが変化する機能を開発予定です。
+          </p>
+          <p class="muted">
+            ※現在、レーティング計算機能は準備中です。
           </p>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section" id="matches">
-      <div class="section-heading">
-        <h2>⚔️ 対戦募集</h2>
-      </div>
+      <section class="section" id="players">
+        <h2 class="section-title">プレイヤー一覧</h2>
+        <div class="box">
+          プレイヤープロフィール機能は準備中です。
+        </div>
+      </section>
 
-      <div class="card card-body">
-        <p class="empty">
-          現在、対戦募集機能を開発中です。
+      <section class="section" id="diary">
+        <h2 class="section-title">プレイヤー日記</h2>
+        <div class="box">
+          プレイヤーの日記を投稿・閲覧できる機能を今後検討します。
+        </div>
+      </section>
+
+      <section class="section" id="about">
+        <h2 class="section-title">サイトについて</h2>
+        <div class="box">
+          スマブランクは開発中の非公式ファンコミュニティです。
+          任天堂株式会社および関連企業の公式サービスではありません。
+        </div>
+      </section>
+
+    </main>
+
+    <aside>
+
+      <section class="section" id="ranking">
+        <h2 class="section-title">ランキング</h2>
+
+        <div class="ranking-list">
+
+          <div class="player">
+            <div class="rank-number">1</div>
+            <div class="avatar">A</div>
+            <div class="player-info">
+              <a class="player-name" href="#player-a">プレイヤーA</a>
+              <div class="player-label">サンプルデータ</div>
+            </div>
+            <div class="rating">2100</div>
+          </div>
+
+          <div class="player">
+            <div class="rank-number">2</div>
+            <div class="avatar">B</div>
+            <div class="player-info">
+              <a class="player-name" href="#player-b">プレイヤーB</a>
+              <div class="player-label">サンプルデータ</div>
+            </div>
+            <div class="rating">2050</div>
+          </div>
+
+          <div class="player">
+            <div class="rank-number">3</div>
+            <div class="avatar">C</div>
+            <div class="player-info">
+              <a class="player-name" href="#player-c">プレイヤーC</a>
+              <div class="player-label">サンプルデータ</div>
+            </div>
+            <div class="rating">2000</div>
+          </div>
+
+          <div class="player">
+            <div class="rank-number">4</div>
+            <div class="avatar">D</div>
+            <div class="player-info">
+              <a class="player-name" href="#player-d">プレイヤーD</a>
+              <div class="player-label">サンプルデータ</div>
+            </div>
+            <div class="rating">1950</div>
+          </div>
+
+          <div class="player">
+            <div class="rank-number">5</div>
+            <div class="avatar">E</div>
+            <div class="player-info">
+              <a class="player-name" href="#player-e">プレイヤーE</a>
+              <div class="player-label">サンプルデータ</div>
+            </div>
+            <div class="rating">1900</div>
+          </div>
+
+        </div>
+
+        <p class="muted">
+          ※表示されている名前とレートは見本です。
+          実際のプレイヤーのデータではありません。
         </p>
-        <p>
-          プレイヤー同士で対戦相手を探せる機能を、今後追加する予定です。
-        </p>
-        <a class="button" href="#about">
-          開発情報を見る
-        </a>
-      </div>
-    </section>
+      </section>
+
+      <section class="section" id="account">
+        <h2 class="section-title">プレイヤー参加案内</h2>
+        <div class="box">
+          <p>
+            ユーザー登録・ログイン機能は現在開発中です。
+          </p>
+          <p class="muted">
+            公開準備ができるまではアカウントを登録できません。
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="rules">
+        <h2 class="section-title">対戦ルール</h2>
+        <div class="box">
+          対戦ルールの詳細は今後掲載予定です。
+        </div>
+      </section>
+
+      <section class="section" id="faq">
+        <h2 class="section-title">Q &amp; A</h2>
+        <div class="box">
+          <p><strong>Q. 利用料金はかかりますか？</strong></p>
+          <p>無料で利用できるサービスを目指しています。</p>
+        </div>
+      </section>
+
+    </aside>
 
   </div>
 
-  <section class="section" id="tournaments">
-    <div class="section-heading">
-      <h2>🥇 大会情報</h2>
+  <footer>
+    <div class="footer-links" id="links">
+      <a href="#about">サイトについて</a>
+      <a href="#rules">対戦ルール</a>
+      <a href="#faq">Q &amp; A</a>
+      <a href="#contact">お問い合わせ</a>
     </div>
 
-    <div class="card card-body">
-      <p class="empty">
-        大会機能は準備中です。
-      </p>
-      <p>
-        将来的には大会の作成、参加登録、トーナメント表の表示などに対応する予定です。
-      </p>
+    <div id="news">
+      スマブランク © 2026｜開発中
     </div>
-  </section>
 
-  <section class="section" id="about">
-    <div class="cta">
-      <h2>スマブランクを一緒に作ろう。</h2>
-      <p>
-        対戦・ランキング・大会機能を順番に開発していきます。
-        現在は初期開発段階です。
-      </p>
-      <a class="button primary" href="#ranking">
-        ランキングを見る
-      </a>
-    </div>
-  </section>
+    <p>
+      本サイトは任天堂株式会社および関連企業とは関係のない
+      非公式のファン制作プロジェクトです。
+    </p>
 
-</main>
+    <p id="contact">
+      お問い合わせ機能は今後追加予定です。
+    </p>
+  </footer>
 
-<footer>
-  <div class="container footer-inner">
-    <span>© 2026 スマブランク（開発中）</span>
-    <span>ファン制作の非公式コミュニティ企画</span>
-  </div>
-  <div class="container" style="margin-top:10px">
-    本サイトは任天堂株式会社および関連企業の公式サイトではありません。
-  </div>
-</footer>
+</div>
+
+<script>
+document.getElementById("searchForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const query = document.getElementById("searchInput").value.trim();
+
+  if (!query) {
+    alert("検索する言葉を入力してください。");
+    return;
+  }
+
+  const searchableItems = Array.from(
+    document.querySelectorAll("main h1, main h2, main .event-title, aside h2, aside .player-name")
+  );
+
+  const match = searchableItems.find(function(item) {
+    return item.textContent.toLowerCase().includes(query.toLowerCase());
+  });
+
+  if (match) {
+    match.scrollIntoView({ behavior: "smooth", block: "center" });
+    match.style.outline = "2px solid #0865e8";
+
+    setTimeout(function() {
+      match.style.outline = "";
+    }, 1800);
+  } else {
+    alert("該当する項目は見つかりませんでした。");
+  }
+});
+</script>
 
 </body>
 </html>
