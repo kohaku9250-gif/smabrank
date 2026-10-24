@@ -492,9 +492,9 @@ footer {
         <a href="#links">リンク集</a>
       </div>
 
-      <div class="account-buttons">
-        <a class="btn" href="#account">新規登録・ログイン</a>
-      </div>
+     <div class="account-buttons">
+  <button class="btn" id="openAuth">新規登録・ログイン</button>
+</div>
     </div>
   </header>
 
@@ -526,8 +526,6 @@ footer {
   <div class="layout">
 
     <main>
-
-      </section>
 
       <section class="section" id="tournaments">
         <h2 class="section-title">開催予定の大会一覧</h2>
@@ -749,6 +747,38 @@ footer {
 
   </div>
 
+  <section id="authPage" hidden>
+  <h2 class="section-title">スマブランク アカウント</h2>
+
+  <div class="box">
+    <h3>新規登録・ログイン</h3>
+
+    <label for="playerName">プレイヤー名（新規登録時）</label>
+    <input id="playerName" type="text" maxlength="20"
+      placeholder="プレイヤー名"
+      style="display:block;width:100%;padding:10px;margin:6px 0 14px;">
+
+    <label for="authEmail">メールアドレス</label>
+    <input id="authEmail" type="email" autocomplete="email"
+      placeholder="メールアドレス"
+      style="display:block;width:100%;padding:10px;margin:6px 0 14px;">
+
+    <label for="authPassword">パスワード</label>
+    <input id="authPassword" type="password"
+      autocomplete="current-password"
+      placeholder="パスワード（6文字以上）"
+      style="display:block;width:100%;padding:10px;margin:6px 0 14px;">
+
+    <button class="btn" id="registerButton">新規登録</button>
+    <button class="btn" id="loginButton">ログイン</button>
+    <button class="btn" id="logoutButton" hidden>ログアウト</button>
+
+    <p id="authMessage" role="status" aria-live="polite"></p>
+    <p id="authUser"></p>
+
+    <button class="btn btn-outline" id="closeAuth">サイトに戻る</button>
+  </div>
+</section>
   <footer>
     <div class="footer-links" id="links">
       <a href="#about">サイトについて</a>
@@ -974,6 +1004,165 @@ backToFighters.addEventListener("click", function() {
   window.scrollTo({ top: 0, behavior: "auto" });
 });
 </script> 
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  updateProfile
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAi6BTRqGQOikX1uunjpUhAhihpooBQ74s",
+  authDomain: "smabrank.firebaseapp.com",
+  projectId: "smabrank",
+  storageBucket: "smabrank.firebasestorage.app",
+  messagingSenderId: "59228475658",
+  appId: "1:59228475658:web:6964b6ab6d7ecd1c7ceaf3"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const authPage = document.getElementById("authPage");
+const openAuth = document.getElementById("openAuth");
+const closeAuth = document.getElementById("closeAuth");
+const playerName = document.getElementById("playerName");
+const authEmail = document.getElementById("authEmail");
+const authPassword = document.getElementById("authPassword");
+const registerButton = document.getElementById("registerButton");
+const loginButton = document.getElementById("loginButton");
+const logoutButton = document.getElementById("logoutButton");
+const authMessage = document.getElementById("authMessage");
+const authUser = document.getElementById("authUser");
+
+function showAuthPage() {
+  document.querySelector(".layout").hidden = true;
+  document.querySelector(".alert").hidden = true;
+  document.querySelector(".search").hidden = true;
+  document.querySelector(".nav").hidden = true;
+  authPage.hidden = false;
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
+
+function showMainPage() {
+  authPage.hidden = true;
+  document.querySelector(".layout").hidden = false;
+  document.querySelector(".alert").hidden = false;
+  document.querySelector(".search").hidden = false;
+  document.querySelector(".nav").hidden = false;
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
+
+openAuth.addEventListener("click", showAuthPage);
+closeAuth.addEventListener("click", showMainPage);
+
+registerButton.addEventListener("click", async () => {
+  const name = playerName.value.trim();
+  const email = authEmail.value.trim();
+  const password = authPassword.value;
+
+  if (!name) {
+    authMessage.textContent = "プレイヤー名を入力してください。";
+    return;
+  }
+
+  if (name.length > 20) {
+    authMessage.textContent = "プレイヤー名は20文字以内にしてください。";
+    return;
+  }
+
+  if (!email || !password) {
+    authMessage.textContent = "メールアドレスとパスワードを入力してください。";
+    return;
+  }
+
+  try {
+    authMessage.textContent = "登録しています…";
+
+    const credential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    await updateProfile(credential.user, {
+      displayName: name
+    });
+
+    authMessage.textContent = "登録できました！";
+  } catch (error) {
+    authMessage.textContent = getAuthErrorMessage(error.code);
+  }
+});
+
+loginButton.addEventListener("click", async () => {
+  const email = authEmail.value.trim();
+  const password = authPassword.value;
+
+  if (!email || !password) {
+    authMessage.textContent = "メールアドレスとパスワードを入力してください。";
+    return;
+  }
+
+  try {
+    authMessage.textContent = "ログインしています…";
+
+    await signInWithEmailAndPassword(auth, email, password);
+
+    authMessage.textContent = "ログインしました！";
+  } catch (error) {
+    authMessage.textContent = getAuthErrorMessage(error.code);
+  }
+});
+
+logoutButton.addEventListener("click", async () => {
+  try {
+    await signOut(auth);
+    authMessage.textContent = "ログアウトしました。";
+  } catch (error) {
+    authMessage.textContent = "ログアウトできませんでした。もう一度お試しください。";
+  }
+});
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    authUser.textContent =
+      "ログイン中：" + (user.displayName || user.email || "ユーザー");
+
+    registerButton.hidden = true;
+    loginButton.hidden = true;
+    logoutButton.hidden = false;
+    openAuth.textContent = "アカウント";
+  } else {
+    authUser.textContent = "ログインしていません。";
+
+    registerButton.hidden = false;
+    loginButton.hidden = false;
+    logoutButton.hidden = true;
+    openAuth.textContent = "新規登録・ログイン";
+  }
+});
+
+function getAuthErrorMessage(code) {
+  const messages = {
+    "auth/email-already-in-use": "このメールアドレスはすでに登録されています。",
+    "auth/invalid-email": "メールアドレスの形式を確認してください。",
+    "auth/weak-password": "パスワードを6文字以上にしてください。",
+    "auth/invalid-credential": "メールアドレスまたはパスワードが違います。",
+    "auth/network-request-failed": "通信に失敗しました。接続を確認してください。",
+    "auth/too-many-requests": "試行回数が多すぎます。時間をおいて再試行してください。"
+  };
+
+  return messages[code] ||
+    "処理に失敗しました。入力内容とFirebaseの設定を確認してください。";
+}
+</script>
   
 </body>
 </html>
