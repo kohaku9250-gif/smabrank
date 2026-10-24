@@ -507,7 +507,8 @@ body.auth-mode #authPage {
         <a href="#links">リンク集</a>
       </div>
 
-     <div class="account-buttons">
+<div class="account-buttons">
+  <span id="headerUser" hidden></span>
   <button class="btn" id="openAuth">新規登録・ログイン</button>
 </div>
     </div>
@@ -1177,9 +1178,15 @@ logoutButton.addEventListener("click", async () => {
 });
 
 onAuthStateChanged(auth, (user) => {
+  const headerUser = document.getElementById("headerUser");
+
   if (user) {
-    authUser.textContent =
-      "ログイン中：" + (user.displayName || user.email || "ユーザー");
+    const name = user.displayName || user.email || "ユーザー";
+
+    authUser.textContent = "ログイン中：" + name;
+
+    headerUser.textContent = name + " さん";
+    headerUser.hidden = false;
 
     registerButton.hidden = true;
     loginButton.hidden = true;
@@ -1187,6 +1194,9 @@ onAuthStateChanged(auth, (user) => {
     openAuth.textContent = "アカウント";
   } else {
     authUser.textContent = "ログインしていません。";
+
+    headerUser.textContent = "";
+    headerUser.hidden = true;
 
     registerButton.hidden = false;
     loginButton.hidden = false;
