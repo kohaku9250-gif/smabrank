@@ -1016,18 +1016,17 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
-  function showAuthPage() {
-    const layout = document.querySelector(".layout");
-    const alertBox = document.querySelector(".alert");
-    const search = document.querySelector(".search");
-    const nav = document.querySelector(".nav");
+ function showAuthPage() {
+  document.querySelector(".header").hidden = true;
+  document.querySelector(".layout").hidden = true;
+  document.querySelector(".alert").hidden = true;
+  document.querySelector(".search").hidden = true;
+  document.querySelector(".nav").hidden = true;
+  document.querySelector("footer").hidden = true;
 
-    console.log("ログイン画面を開きます", {
-      layout: !!layout,
-      alert: !!alertBox,
-      search: !!search,
-      nav: !!nav
-    });
+  authPage.hidden = false;
+  window.scrollTo(0, 0);
+}
 
     if (layout) layout.hidden = true;
     if (alertBox) alertBox.hidden = true;
@@ -1038,22 +1037,18 @@ document.addEventListener("DOMContentLoaded", function () {
     window.scrollTo(0, 0);
   }
 
-  function showMainPage() {
-    authPage.hidden = true;
+function showMainPage() {
+  authPage.hidden = true;
 
-    const layout = document.querySelector(".layout");
-    const alertBox = document.querySelector(".alert");
-    const search = document.querySelector(".search");
-    const nav = document.querySelector(".nav");
+  document.querySelector(".header").hidden = false;
+  document.querySelector(".layout").hidden = false;
+  document.querySelector(".alert").hidden = false;
+  document.querySelector(".search").hidden = false;
+  document.querySelector(".nav").hidden = false;
+  document.querySelector("footer").hidden = false;
 
-    if (layout) layout.hidden = false;
-    if (alertBox) alertBox.hidden = false;
-    if (search) search.hidden = false;
-    if (nav) nav.hidden = false;
-
-    window.scrollTo(0, 0);
-  }
-
+  window.scrollTo(0, 0);
+}
   openAuth.addEventListener("click", showAuthPage);
   closeAuth.addEventListener("click", showMainPage);
 });
@@ -1096,21 +1091,27 @@ const authMessage = document.getElementById("authMessage");
 const authUser = document.getElementById("authUser");
 
 function showAuthPage() {
+  document.querySelector(".header").hidden = true;
   document.querySelector(".layout").hidden = true;
   document.querySelector(".alert").hidden = true;
   document.querySelector(".search").hidden = true;
   document.querySelector(".nav").hidden = true;
-  authPage.hidden = false;
-  window.scrollTo({ top: 0, behavior: "auto" });
-}
+  document.querySelector("footer").hidden = true;
 
+  authPage.hidden = false;
+  window.scrollTo(0, 0);
+}
 function showMainPage() {
   authPage.hidden = true;
+
+  document.querySelector(".header").hidden = false;
   document.querySelector(".layout").hidden = false;
   document.querySelector(".alert").hidden = false;
   document.querySelector(".search").hidden = false;
   document.querySelector(".nav").hidden = false;
-  window.scrollTo({ top: 0, behavior: "auto" });
+  document.querySelector("footer").hidden = false;
+
+  window.scrollTo(0, 0);
 }
 
 registerButton.addEventListener("click", async () => {
