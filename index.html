@@ -470,6 +470,21 @@ footer {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+  /* ログイン画面表示中は、サイト本体を隠す */
+body.auth-mode .header,
+body.auth-mode .search,
+body.auth-mode .nav,
+body.auth-mode .alert,
+body.auth-mode .layout,
+body.auth-mode footer {
+  display: none !important;
+}
+
+body.auth-mode #authPage {
+  display: block !important;
+  margin-top: 30px;
+}
+  
 </style>
 </head>
 
@@ -1016,30 +1031,17 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
-  function showAuthPage() {
-    document.querySelector(".header").hidden = true;
-    document.querySelector(".search").hidden = true;
-    document.querySelector(".nav").hidden = true;
-    document.querySelector(".alert").hidden = true;
-    document.querySelector(".layout").hidden = true;
-    document.querySelector("footer").hidden = true;
+ function showAuthPage() {
+  document.body.classList.add("auth-mode");
+  authPage.hidden = false;
+  window.scrollTo(0, 0);
+}
 
-    authPage.hidden = false;
-    window.scrollTo(0, 0);
-  }
-
-  function showMainPage() {
-    authPage.hidden = true;
-
-    document.querySelector(".header").hidden = false;
-    document.querySelector(".search").hidden = false;
-    document.querySelector(".nav").hidden = false;
-    document.querySelector(".alert").hidden = false;
-    document.querySelector(".layout").hidden = false;
-    document.querySelector("footer").hidden = false;
-
-    window.scrollTo(0, 0);
-  }
+function showMainPage() {
+  authPage.hidden = true;
+  document.body.classList.remove("auth-mode");
+  window.scrollTo(0, 0);
+}
 
   openAuth.addEventListener("click", showAuthPage);
   closeAuth.addEventListener("click", showMainPage);
