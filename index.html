@@ -1029,7 +1029,10 @@ document.addEventListener("DOMContentLoaded", function () {
     window.scrollTo(0, 0);
   }
 
-  openAuth.addEventListener("click", showAuthPage);
+  openAuth.addEventListener("click", function () {
+  alert("ボタンのクリック処理は動いています！");
+  showAuthPage();
+});
   closeAuth.addEventListener("click", showMainPage);
 });
 </script>
