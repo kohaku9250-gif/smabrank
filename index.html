@@ -1016,39 +1016,31 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
- function showAuthPage() {
-  document.querySelector(".header").hidden = true;
-  document.querySelector(".layout").hidden = true;
-  document.querySelector(".alert").hidden = true;
-  document.querySelector(".search").hidden = true;
-  document.querySelector(".nav").hidden = true;
-  document.querySelector("footer").hidden = true;
-
-  authPage.hidden = false;
-  window.scrollTo(0, 0);
-}
-
-    if (layout) layout.hidden = true;
-    if (alertBox) alertBox.hidden = true;
-    if (search) search.hidden = true;
-    if (nav) nav.hidden = true;
+  function showAuthPage() {
+    document.querySelector(".header").hidden = true;
+    document.querySelector(".search").hidden = true;
+    document.querySelector(".nav").hidden = true;
+    document.querySelector(".alert").hidden = true;
+    document.querySelector(".layout").hidden = true;
+    document.querySelector("footer").hidden = true;
 
     authPage.hidden = false;
     window.scrollTo(0, 0);
   }
 
-function showMainPage() {
-  authPage.hidden = true;
+  function showMainPage() {
+    authPage.hidden = true;
 
-  document.querySelector(".header").hidden = false;
-  document.querySelector(".layout").hidden = false;
-  document.querySelector(".alert").hidden = false;
-  document.querySelector(".search").hidden = false;
-  document.querySelector(".nav").hidden = false;
-  document.querySelector("footer").hidden = false;
+    document.querySelector(".header").hidden = false;
+    document.querySelector(".search").hidden = false;
+    document.querySelector(".nav").hidden = false;
+    document.querySelector(".alert").hidden = false;
+    document.querySelector(".layout").hidden = false;
+    document.querySelector("footer").hidden = false;
 
-  window.scrollTo(0, 0);
-}
+    window.scrollTo(0, 0);
+  }
+
   openAuth.addEventListener("click", showAuthPage);
   closeAuth.addEventListener("click", showMainPage);
 });
