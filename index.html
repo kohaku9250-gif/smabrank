@@ -420,6 +420,56 @@ footer {
   }
 }
 </style>
+  /* ファイター一覧 */
+
+.fighter-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2px;
+  margin: 10px 0 20px;
+  background: #d0d0d0;
+  border: 1px solid #d0d0d0;
+}
+
+.fighter-button {
+  min-width: 0;
+  min-height: 70px;
+  padding: 12px 8px;
+  border: none;
+  background: #0865e8;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fighter-button:hover {
+  background: #064eb5;
+}
+
+.fighter-button:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: -3px;
+}
+
+#fighterRanking {
+  margin-top: 20px;
+}
+
+#fighterRanking[hidden] {
+  display: none;
+}
+
+#backToFighters {
+  margin-bottom: 15px;
+}
+
+@media (max-width: 600px) {
+  .fighter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 </head>
 
 <body>
@@ -460,7 +510,7 @@ footer {
   <a href="#matches" data-page="matches">フリー対戦</a>
   <a href="#rating" data-page="rating">レーティング対戦</a>
   <a href="#tournaments" data-page="tournaments">大会</a>
-  <a href="#players" data-page="players">プレイヤー一覧</a>
+  <a href="#players" data-page="players">ファイター一覧</a>
   <a href="#diary" data-page="diary">プレイヤー日記</a>
   <a href="#ranking" data-page="ranking">ランキング</a>
   </nav>
@@ -548,7 +598,37 @@ footer {
         </div>
       </section>
 
-      <section class="section" id="players">
+<section class="section" id="players">
+
+  <h2 class="section-title">ファイター一覧</h2>
+
+  <p>
+    ファイターを選ぶと、そのキャラクターを使用する
+    プレイヤーのレートを確認できます。
+  </p>
+
+  <div id="fighterList" class="fighter-grid"></div>
+
+  <div id="fighterRanking" hidden>
+
+    <button type="button" class="btn" id="backToFighters">
+      ← ファイター一覧に戻る
+    </button>
+
+    <h2 class="section-title" id="selectedFighter">
+      ファイター別ランキング
+    </h2>
+
+    <p class="muted">
+      以下は表示確認用のサンプルデータです。
+      実際のプレイヤーのレートではありません。
+    </p>
+
+    <div id="fighterPlayers" class="ranking-list"></div>
+
+  </div>
+
+</section>
         <h2 class="section-title">プレイヤー一覧</h2>
         <div class="box">
           プレイヤープロフィール機能は準備中です。
@@ -778,6 +858,121 @@ menuLinks.forEach(link => {
 // 最初に表示する画面
 showPage('tournaments');
 </script>
+ <script>
+const fighters = [
+  "マリオ", "ドンキーコング", "リンク",
+  "サムス", "ダークサムス", "ヨッシー",
+  "カービィ", "フォックス", "ピカチュウ",
+  "ルイージ", "ネス", "キャプテン・ファルコン",
+  "プリン", "ピーチ", "デイジー",
+  "クッパ", "アイスクライマー", "シーク",
+  "ゼルダ", "ドクターマリオ", "ピチュー",
+  "ファルコ", "マルス", "ルキナ",
+  "こどもリンク", "ガノンドロフ", "ミュウツー",
+  "ロイ", "クロム", "Mr.ゲーム＆ウォッチ",
+  "メタナイト", "ピット", "ブラックピット",
+  "ゼロスーツサムス", "ワリオ", "スネーク",
+  "アイク", "ポケモントレーナー", "ディディーコング",
+  "リュカ", "ソニック", "デデデ",
+  "ピクミン＆オリマー", "ルカリオ", "ロボット",
+  "トゥーンリンク", "ウルフ", "むらびと",
+  "ロックマン", "Wii Fit トレーナー", "ロゼッタ＆チコ",
+  "リトル・マック", "ゲッコウガ", "Miiファイター格闘",
+  "Miiファイター剣術", "Miiファイター射撃", "パルテナ",
+  "パックマン", "ルフレ", "シュルク",
+  "クッパJr.", "ダックハント", "リュウ",
+  "ケン", "クラウド", "カムイ",
+  "ベヨネッタ", "インクリング", "リドリー",
+  "シモン", "リヒター", "キングクルール",
+  "しずえ", "ガオガエン", "パックンフラワー",
+  "ジョーカー", "勇者", "バンジョー＆カズーイ",
+  "テリー", "ベレト／ベレス", "ミェンミェン",
+  "スティーブ／アレックス", "セフィロス", "ホムラ／ヒカリ",
+  "カズヤ", "ソラ", "おまかせ"
+];
+
+// 表示確認用のサンプルデータ。
+// 実際のプレイヤーや対戦結果とは連動していません。
+const samplePlayers = [
+  { name: "サンプルプレイヤーA", rating: 2100 },
+  { name: "サンプルプレイヤーB", rating: 2050 },
+  { name: "サンプルプレイヤーC", rating: 1980 }
+];
+
+const fighterList = document.getElementById("fighterList");
+const fighterRanking = document.getElementById("fighterRanking");
+const selectedFighter = document.getElementById("selectedFighter");
+const fighterPlayers = document.getElementById("fighterPlayers");
+const backToFighters = document.getElementById("backToFighters");
+
+// ファイターのボタンを作る
+fighters.forEach(function(fighter) {
+  const button = document.createElement("button");
+
+  button.type = "button";
+  button.className = "fighter-button";
+  button.textContent = fighter;
+
+  button.addEventListener("click", function() {
+    openFighterRanking(fighter);
+  });
+
+  fighterList.appendChild(button);
+});
+
+// ファイターを選んだときの処理
+function openFighterRanking(fighter) {
+  selectedFighter.textContent = fighter + " を使用するプレイヤー";
+
+  fighterPlayers.replaceChildren();
+
+  samplePlayers.forEach(function(player, index) {
+    const row = document.createElement("div");
+    row.className = "player";
+
+    const rank = document.createElement("div");
+    rank.className = "rank-number";
+    rank.textContent = index + 1;
+
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    avatar.textContent = player.name.slice(-1);
+
+    const info = document.createElement("div");
+    info.className = "player-info";
+
+    const name = document.createElement("span");
+    name.className = "player-name";
+    name.textContent = player.name;
+
+    const label = document.createElement("div");
+    label.className = "player-label";
+    label.textContent = "サンプルデータ";
+
+    info.append(name, label);
+
+    const rating = document.createElement("div");
+    rating.className = "rating";
+    rating.textContent = player.rating;
+
+    row.append(rank, avatar, info, rating);
+    fighterPlayers.appendChild(row);
+  });
+
+  fighterList.hidden = true;
+  fighterRanking.hidden = false;
+
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
+
+// 一覧に戻る
+backToFighters.addEventListener("click", function() {
+  fighterRanking.hidden = true;
+  fighterList.hidden = false;
+
+  window.scrollTo({ top: 0, behavior: "auto" });
+});
+</script> 
   
 </body>
 </html>
