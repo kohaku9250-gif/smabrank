@@ -457,12 +457,12 @@ footer {
   </form>
 
   <nav class="nav" aria-label="メインメニュー">
-    <a href="#matches">フリー対戦</a>
-    <a href="#rating">レーティング対戦</a>
-    <a href="#tournaments">大会</a>
-    <a href="#players">プレイヤー一覧</a>
-    <a href="#diary">プレイヤー日記</a>
-    <a href="#ranking">ランキング</a>
+  <a href="#matches" data-page="matches">フリー対戦</a>
+  <a href="#rating" data-page="rating">レーティング対戦</a>
+  <a href="#tournaments" data-page="tournaments">大会</a>
+  <a href="#players" data-page="players">プレイヤー一覧</a>
+  <a href="#diary" data-page="diary">プレイヤー日記</a>
+  <a href="#ranking" data-page="ranking">ランキング</a>
   </nav>
 
   <div class="alert">
@@ -723,6 +723,61 @@ document.getElementById("searchForm").addEventListener("submit", function(event)
   }
 });
 </script>
+  
+<script>
+const menuLinks = document.querySelectorAll('.nav a');
 
+const pages = {
+  matches: ['#matches'],
+  rating: ['#rating'],
+  tournaments: ['#tournaments'],
+  players: ['#players'],
+  diary: ['#diary'],
+  ranking: ['#ranking']
+};
+
+function showPage(pageName) {
+  const targets = pages[pageName];
+
+  if (!targets) return;
+
+  // 各メイン機能の表示を切り替える
+  document.querySelectorAll('main > .section').forEach(section => {
+    section.hidden = true;
+  });
+
+  // 選択した機能のセクションだけを表示する
+  targets.forEach(selector => {
+    const section = document.querySelector(selector);
+    if (section) section.hidden = false;
+  });
+
+  // メニューの選択状態を更新する
+  menuLinks.forEach(link => {
+    const active = link.dataset.page === pageName;
+    link.classList.toggle('active', active);
+
+    if (active) {
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.removeAttribute('aria-current');
+    }
+  });
+
+  // ページ上部に戻る
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+menuLinks.forEach(link => {
+  link.addEventListener('click', event => {
+    event.preventDefault();
+    showPage(link.dataset.page);
+  });
+});
+
+// 最初に表示する画面
+showPage('tournaments');
+</script>
+  
 </body>
 </html>
