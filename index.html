@@ -1011,28 +1011,50 @@ document.addEventListener("DOMContentLoaded", function () {
   const openAuth = document.getElementById("openAuth");
   const closeAuth = document.getElementById("closeAuth");
 
+  if (!authPage || !openAuth || !closeAuth) {
+    console.error("ログイン画面またはボタンが見つかりません。");
+    return;
+  }
+
   function showAuthPage() {
-    document.querySelector(".layout").hidden = true;
-    document.querySelector(".alert").hidden = true;
-    document.querySelector(".search").hidden = true;
-    document.querySelector(".nav").hidden = true;
+    const layout = document.querySelector(".layout");
+    const alertBox = document.querySelector(".alert");
+    const search = document.querySelector(".search");
+    const nav = document.querySelector(".nav");
+
+    console.log("ログイン画面を開きます", {
+      layout: !!layout,
+      alert: !!alertBox,
+      search: !!search,
+      nav: !!nav
+    });
+
+    if (layout) layout.hidden = true;
+    if (alertBox) alertBox.hidden = true;
+    if (search) search.hidden = true;
+    if (nav) nav.hidden = true;
+
     authPage.hidden = false;
     window.scrollTo(0, 0);
   }
 
   function showMainPage() {
     authPage.hidden = true;
-    document.querySelector(".layout").hidden = false;
-    document.querySelector(".alert").hidden = false;
-    document.querySelector(".search").hidden = false;
-    document.querySelector(".nav").hidden = false;
+
+    const layout = document.querySelector(".layout");
+    const alertBox = document.querySelector(".alert");
+    const search = document.querySelector(".search");
+    const nav = document.querySelector(".nav");
+
+    if (layout) layout.hidden = false;
+    if (alertBox) alertBox.hidden = false;
+    if (search) search.hidden = false;
+    if (nav) nav.hidden = false;
+
     window.scrollTo(0, 0);
   }
 
-  openAuth.addEventListener("click", function () {
-  alert("ボタンのクリック処理は動いています！");
-  showAuthPage();
-});
+  openAuth.addEventListener("click", showAuthPage);
   closeAuth.addEventListener("click", showMainPage);
 });
 </script>
